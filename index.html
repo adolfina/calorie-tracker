@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Calorie & Deficit Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -15,22 +16,29 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
                     },
                     colors: {
-                        ios: {
-                            bgLight: '#F2F2F7',
+                        cyber: {
+                            bgDark: '#080C14',
+                            cardDark: '#0F172A',
+                            cardDarkBorder: 'rgba(255, 255, 255, 0.08)',
+                            bgLight: '#F3F4F6',
                             cardLight: '#FFFFFF',
-                            bgDark: '#000000',
-                            cardDark: '#1C1C1E',
-                            blue: '#007AFF',
-                            green: '#34C759',
-                            orange: '#FF9500',
-                            red: '#FF3B30',
-                            purple: '#AF52DE',
-                            gray: '#8E8E93',
-                            lightGray: '#E5E5EA'
+                            emerald: '#10B981',
+                            cyan: '#06B6D4',
+                            amber: '#F59E0B',
+                            rose: '#F43F5E',
+                            purple: '#8B5CF6',
                         }
+                    },
+                    boxShadow: {
+                        'neon-emerald': '0 0 20px -5px rgba(16, 185, 129, 0.4)',
+                        'neon-cyan': '0 0 20px -5px rgba(6, 182, 212, 0.4)',
+                        'neon-amber': '0 0 20px -5px rgba(245, 158, 11, 0.4)',
+                        'neon-rose': '0 0 20px -5px rgba(244, 63, 94, 0.4)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.36)'
                     }
                 }
             }
@@ -49,57 +57,66 @@
             -webkit-user-select: auto;
         }
 
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        /* Hide scrollbar for IE, Edge and Firefox */
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .glass-panel-dark {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.6) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .glass-header {
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        .glass-panel-light {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.8) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
         }
 
-        /* Smooth iOS transitions */
-        .tab-transition {
-            transition: transform 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);
+        .glow-effect-green {
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
+        }
+        
+        .glow-effect-red {
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.25);
         }
 
-        /* Number input style customization */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { 
             -webkit-appearance: none;
             margin: 0; 
         }
-        input[type=number] {
-            -moz-appearance: textfield;
+        input[type=number] { -moz-appearance: textfield; }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
+        .pulse-live { animation: pulse-glow 2s infinite ease-in-out; }
     </style>
 </head>
-<body class="bg-ios-bgLight dark:bg-ios-bgDark text-gray-900 dark:text-gray-100 min-h-full font-sans antialiased pb-12 transition-colors duration-200">
+<body class="bg-cyber-bgLight dark:bg-cyber-bgDark text-slate-800 dark:text-slate-100 min-h-full font-sans antialiased pb-12 transition-colors duration-300">
 
-    <!-- Top Mobile Header -->
-    <header class="sticky top-0 z-50 glass-header bg-white/80 dark:bg-black/80 border-b border-gray-200 dark:border-zinc-800 px-4 pt-4 pb-3">
+    <header class="sticky top-0 z-50 glass-panel-light dark:glass-panel-dark border-b border-slate-200 dark:border-slate-800 px-4 pt-4 pb-3 shadow-md">
         <div class="max-w-md mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-ios-orange to-ios-red flex items-center justify-center text-white shadow-sm">
-                    <i class="fa-solid fa-fire text-lg"></i>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyber-emerald via-cyber-cyan to-cyber-purple flex items-center justify-center text-white shadow-neon-emerald">
+                    <i class="fa-solid fa-bolt-lightning text-lg"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold tracking-tight leading-none">FitDeficit</h1>
-                    <p class="text-xs text-ios-gray font-medium">Daily Calorie Balance</p>
+                    <h1 class="text-xl font-extrabold font-display tracking-tight leading-none bg-gradient-to-r from-cyber-cyan via-cyber-emerald to-cyber-purple bg-clip-text text-transparent">
+                        NEXUS <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-cyber-emerald/10 text-cyber-emerald border border-cyber-emerald/30">FIT</span>
+                    </h1>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Precision Calorie Matrix</p>
                 </div>
             </div>
             
             <div class="flex items-center gap-2">
-                <button id="themeToggleBtn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-ios-lightGray/60 dark:bg-zinc-800 flex items-center justify-center text-ios-gray hover:text-gray-900 dark:hover:text-white transition">
-                    <i id="themeIcon" class="fa-solid fa-moon"></i>
+                <button id="themeToggleBtn" onclick="toggleTheme()" class="w-9 h-9 rounded-xl bg-slate-200/80 dark:bg-slate-800/80 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:scale-105 active:scale-95 transition">
+                    <i id="themeIcon" class="fa-solid fa-sun text-cyber-amber"></i>
                 </button>
-                <button onclick="resetDailyData()" class="text-xs font-semibold text-ios-blue bg-ios-blue/10 dark:bg-ios-blue/20 px-3 py-2 rounded-full hover:bg-ios-blue/20 transition flex items-center gap-1">
+                <button onclick="resetDailyData()" class="text-xs font-bold text-cyber-cyan bg-cyber-cyan/10 hover:bg-cyber-cyan/20 border border-cyber-cyan/30 px-3 py-2 rounded-xl transition active:scale-95 flex items-center gap-1.5">
                     <i class="fa-solid fa-rotate-right text-xs"></i> Reset
                 </button>
             </div>
@@ -108,204 +125,256 @@
 
     <main class="max-w-md mx-auto px-4 pt-4 space-y-4">
 
-        <!-- Target Deficit Selector Card -->
-        <section class="bg-ios-cardLight dark:bg-ios-cardDark rounded-3xl p-4 shadow-sm border border-gray-100 dark:border-zinc-800/80">
+        <section class="glass-panel-light dark:glass-panel-dark rounded-3xl p-4 shadow-xl">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-semibold text-ios-gray uppercase tracking-wider">Target Calorie Deficit</span>
-                <span id="targetBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-ios-blue/10 text-ios-blue">Weight Loss Goal</span>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bullseye text-cyber-cyan text-sm"></i>
+                    <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Deficit Goal</span>
+                </div>
+                <span id="targetBadge" class="text-[11px] font-bold px-3 py-0.5 rounded-full bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/30">
+                    Fat Loss Rate
+                </span>
             </div>
             
-            <!-- Segmented Control -->
-            <div class="bg-ios-bgLight dark:bg-zinc-800/70 p-1 rounded-2xl flex relative">
-                <button id="btnDeficit250" onclick="setDeficitTarget(250)" class="flex-1 py-2.5 text-xs font-semibold rounded-xl text-center z-10 transition-all duration-200 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-leaf text-xs"></i> 250 kcal
-                    <span class="text-[10px] opacity-75 font-normal">(-0.5 lb/wk)</span>
+            <!-- Futuristic Segmented Controls -->
+            <div class="bg-slate-200/70 dark:bg-slate-900/80 p-1 rounded-2xl flex relative border border-slate-300/50 dark:border-slate-800">
+                <button id="btnDeficit250" onclick="setDeficitTarget(250)" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-center z-10 transition-all duration-300 flex flex-col items-center justify-center">
+                    <span>250 kcal</span>
+                    <span class="text-[9px] font-normal opacity-70">-0.5 lb/wk</span>
                 </button>
-                <button id="btnDeficit500" onclick="setDeficitTarget(500)" class="flex-1 py-2.5 text-xs font-semibold rounded-xl text-center z-10 transition-all duration-200 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-bolt text-xs"></i> 500 kcal
-                    <span class="text-[10px] opacity-75 font-normal">(-1.0 lb/wk)</span>
+                <button id="btnDeficit500" onclick="setDeficitTarget(500)" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-center z-10 transition-all duration-300 flex flex-col items-center justify-center">
+                    <span>500 kcal</span>
+                    <span class="text-[9px] font-normal opacity-70">-1.0 lb/wk</span>
                 </button>
-                <button id="btnDeficitCustom" onclick="setDeficitTarget('custom')" class="flex-1 py-2.5 text-xs font-semibold rounded-xl text-center z-10 transition-all duration-200 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-sliders text-xs"></i> Custom
+                <button id="btnDeficitCustom" onclick="setDeficitTarget('custom')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-center z-10 transition-all duration-300 flex flex-col items-center justify-center">
+                    <span>Custom</span>
+                    <span class="text-[9px] font-normal opacity-70">Variable</span>
                 </button>
             </div>
 
-            <!-- Custom Deficit Input (Hidden by default) -->
-            <div id="customDeficitContainer" class="hidden mt-3 pt-3 border-t border-gray-100 dark:border-zinc-800">
-                <div class="flex items-center justify-between bg-ios-bgLight dark:bg-zinc-800/50 px-3 py-2 rounded-xl">
-                    <label for="customDeficitInput" class="text-xs font-medium text-ios-gray">Custom Deficit (kcal):</label>
-                    <input type="number" id="customDeficitInput" value="350" min="0" max="2000" oninput="onCustomDeficitChange()" class="w-20 text-right bg-transparent font-bold text-sm outline-none text-ios-blue">
+            <!-- Custom Deficit Input Box -->
+            <div id="customDeficitContainer" class="hidden mt-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-900/60 px-3.5 py-2 rounded-xl border border-cyber-cyan/30">
+                    <label for="customDeficitInput" class="text-xs font-medium text-slate-500 dark:text-slate-400">Custom Target (kcal):</label>
+                    <input type="number" id="customDeficitInput" value="350" min="0" max="2000" oninput="onCustomDeficitChange()" class="w-24 text-right bg-transparent font-bold text-base outline-none text-cyber-cyan font-display">
                 </div>
             </div>
         </section>
 
-        <!-- Live Dashboard Card -->
-        <section class="bg-ios-cardLight dark:bg-ios-cardDark rounded-3xl p-5 shadow-sm border border-gray-100 dark:border-zinc-800/80">
+        <section id="heroGaugeCard" class="glass-panel-light dark:glass-panel-dark rounded-3xl p-5 shadow-2xl relative overflow-hidden transition-all duration-300">
+            <!-- Decorative Glow Element -->
+            <div class="absolute -right-10 -top-10 w-36 h-36 bg-cyber-emerald/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-10 -bottom-10 w-36 h-36 bg-cyber-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+
             <div class="flex items-center justify-between mb-2">
-                <h2 class="text-sm font-bold text-gray-800 dark:text-gray-200">Daily Balance Gauge</h2>
-                <span id="statusTag" class="text-xs font-bold px-2.5 py-1 rounded-full bg-ios-green/10 text-ios-green flex items-center gap-1">
-                    <i class="fa-solid fa-circle-check text-[10px]"></i> On Track
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-cyber-emerald pulse-live"></span>
+                    <h2 class="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Live Calorie Target</h2>
+                </div>
+                <span id="statusTag" class="text-xs font-bold px-3 py-1 rounded-full bg-cyber-emerald/10 text-cyber-emerald border border-cyber-emerald/30 flex items-center gap-1.5 shadow-neon-emerald">
+                    <i class="fa-solid fa-shield-halved text-[10px]"></i> On Track
                 </span>
             </div>
 
-            <!-- Main Metric Ring / Numbers display -->
-            <div class="my-4 text-center">
-                <div class="inline-flex flex-col items-center justify-center">
-                    <div class="text-xs text-ios-gray font-medium uppercase tracking-wide">Calorie Target Allowance</div>
-                    <div class="flex items-baseline gap-1 my-1">
-                        <span id="targetCalorieGoal" class="text-4xl font-extrabold tracking-tight">0</span>
-                        <span class="text-sm font-semibold text-ios-gray">kcal</span>
-                    </div>
-                    <div id="remainingSubtext" class="text-xs font-semibold text-ios-green">
-                        <span id="netRemainingVal">0</span> kcal remaining today
-                    </div>
+            <!-- Main Metric Display -->
+            <div class="my-5 text-center">
+                <div class="text-[11px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-bold">Max Intake Allowance</div>
+                <div class="flex items-baseline justify-center gap-1.5 my-1">
+                    <span id="targetCalorieGoal" class="text-5xl font-extrabold font-display tracking-tight bg-gradient-to-br from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">0</span>
+                    <span class="text-sm font-extrabold text-cyber-cyan">KCAL</span>
+                </div>
+                <div id="remainingSubtext" class="text-xs font-bold text-cyber-emerald flex items-center justify-center gap-1 mt-1">
+                    <span id="netRemainingVal">0</span> kcal remaining today
                 </div>
             </div>
 
-            <!-- Progress Bar -->
+            <!-- Glowing Cyber Bar -->
             <div class="space-y-1.5 mb-5">
-                <div class="flex justify-between text-xs font-medium text-ios-gray">
-                    <span>Intake: <strong id="intakeBarLabel" class="text-gray-900 dark:text-white">0</strong> kcal</span>
-                    <span>Max Allowance: <strong id="maxBarLabel" class="text-gray-900 dark:text-white">0</strong> kcal</span>
+                <div class="flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
+                    <span>Intake: <strong id="intakeBarLabel" class="text-slate-900 dark:text-white font-display">0</strong></span>
+                    <span>Goal Limit: <strong id="maxBarLabel" class="text-slate-900 dark:text-white font-display">0</strong></span>
                 </div>
-                <div class="w-full h-3.5 bg-ios-bgLight dark:bg-zinc-800 rounded-full overflow-hidden p-0.5 relative">
-                    <div id="progressBar" class="h-full bg-gradient-to-r from-ios-blue via-ios-green to-ios-orange rounded-full transition-all duration-300 w-0"></div>
+                <div class="w-full h-4 bg-slate-200 dark:bg-slate-900/90 rounded-2xl overflow-hidden p-0.5 border border-slate-300/50 dark:border-slate-800 relative">
+                    <div id="progressBar" class="h-full bg-gradient-to-r from-cyber-cyan via-cyber-emerald to-cyber-amber rounded-xl transition-all duration-500 w-0 shadow-neon-emerald"></div>
                 </div>
             </div>
 
-            <!-- Summary 3-Grid Display -->
-            <div class="grid grid-cols-3 gap-2 text-center pt-3 border-t border-gray-100 dark:border-zinc-800">
-                <div class="bg-ios-bgLight/60 dark:bg-zinc-800/40 p-2.5 rounded-2xl">
-                    <div class="text-[10px] font-semibold text-ios-gray uppercase">Intake</div>
-                    <div id="sumIntake" class="text-base font-bold text-ios-orange mt-0.5">0</div>
-                    <div class="text-[10px] text-ios-gray">Food & Drink</div>
+            <!-- Summary Grid Cards -->
+            <div class="grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-200 dark:border-slate-800">
+                <div class="bg-slate-100/80 dark:bg-slate-900/50 p-2.5 rounded-2xl border border-slate-200/60 dark:border-slate-800 text-center">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Intake</div>
+                    <div id="sumIntake" class="text-lg font-black font-display text-cyber-amber mt-0.5">0</div>
+                    <div class="text-[9px] text-slate-400">Food / Drink</div>
                 </div>
-                <div class="bg-ios-bgLight/60 dark:bg-zinc-800/40 p-2.5 rounded-2xl">
-                    <div class="text-[10px] font-semibold text-ios-gray uppercase">Total Burned</div>
-                    <div id="sumTotalBurn" class="text-base font-bold text-ios-purple mt-0.5">0</div>
-                    <div class="text-[10px] text-ios-gray">BMR + Active</div>
+                <div class="bg-slate-100/80 dark:bg-slate-900/50 p-2.5 rounded-2xl border border-slate-200/60 dark:border-slate-800 text-center">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Burn</div>
+                    <div id="sumTotalBurn" class="text-lg font-black font-display text-cyber-purple mt-0.5">0</div>
+                    <div class="text-[9px] text-slate-400">BMR + Active</div>
                 </div>
-                <div class="bg-ios-bgLight/60 dark:bg-zinc-800/40 p-2.5 rounded-2xl">
-                    <div class="text-[10px] font-semibold text-ios-gray uppercase">Target Deficit</div>
-                    <div id="sumDeficit" class="text-base font-bold text-ios-blue mt-0.5">-250</div>
-                    <div class="text-[10px] text-ios-gray">kcal goal</div>
+                <div class="bg-slate-100/80 dark:bg-slate-900/50 p-2.5 rounded-2xl border border-slate-200/60 dark:border-slate-800 text-center">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Deficit Target</div>
+                    <div id="sumDeficit" class="text-lg font-black font-display text-cyber-cyan mt-0.5">-250</div>
+                    <div class="text-[9px] text-slate-400">kcal goal</div>
                 </div>
             </div>
         </section>
 
-        <!-- Calorie Inputs Section -->
-        <section class="space-y-3">
-            <h3 class="text-xs font-semibold text-ios-gray uppercase tracking-wider px-1">Daily Tracker Inputs</h3>
+        <section class="space-y-3.5">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Calorie Matrix Inputs</h3>
 
             <!-- 1. Resting Calories / BMR Card -->
-            <div class="bg-ios-cardLight dark:bg-ios-cardDark rounded-2xl p-3.5 shadow-sm border border-gray-100 dark:border-zinc-800/80 flex items-center justify-between">
+            <div class="glass-panel-light dark:glass-panel-dark rounded-2xl p-4 shadow-md flex items-center justify-between border border-slate-200 dark:border-slate-800">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-ios-blue flex items-center justify-center">
+                    <div class="w-11 h-11 rounded-2xl bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan flex items-center justify-center shadow-neon-cyan">
                         <i class="fa-solid fa-bed text-lg"></i>
                     </div>
                     <div>
-                        <div class="text-sm font-semibold">Resting Calories (BMR)</div>
-                        <div class="text-xs text-ios-gray">Basal metabolic rate / baseline burn</div>
+                        <div class="text-sm font-bold">Resting Calories (BMR)</div>
+                        <div class="text-xs text-slate-400">Basal metabolic rate</div>
                     </div>
                 </div>
-                <div class="w-28 flex items-center gap-1 bg-ios-bgLight dark:bg-zinc-800 py-1.5 px-2.5 rounded-xl border border-transparent focus-within:border-ios-blue focus-within:ring-2 focus-within:ring-ios-blue/20 transition">
-                    <input type="number" id="inputBmr" placeholder="2000" oninput="calculateAll()" class="w-full bg-transparent text-right font-bold text-base outline-none text-ios-blue">
-                    <span class="text-xs font-semibold text-ios-gray">kcal</span>
+                <div class="w-28 flex items-center gap-1 bg-slate-100 dark:bg-slate-900/90 py-2 px-3 rounded-xl border border-slate-300/50 dark:border-slate-800 focus-within:border-cyber-cyan focus-within:ring-2 focus-within:ring-cyber-cyan/20 transition">
+                    <input type="number" id="inputBmr" placeholder="2000" oninput="calculateAll()" class="w-full bg-transparent text-right font-black font-display text-base outline-none text-cyber-cyan">
+                    <span class="text-xs font-bold text-slate-400">kcal</span>
                 </div>
             </div>
 
             <!-- 2. Calorie Intake Box -->
-            <div class="bg-ios-cardLight dark:bg-ios-cardDark rounded-2xl p-3.5 shadow-sm border border-gray-100 dark:border-zinc-800/80">
-                <div class="flex items-center justify-between mb-2">
+            <div class="glass-panel-light dark:glass-panel-dark rounded-2xl p-4 shadow-md space-y-3 border border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/10 text-ios-orange flex items-center justify-center">
+                        <div class="w-11 h-11 rounded-2xl bg-cyber-amber/10 border border-cyber-amber/30 text-cyber-amber flex items-center justify-center shadow-neon-amber">
                             <i class="fa-solid fa-utensils text-lg"></i>
                         </div>
                         <div>
-                            <label for="inputIntake" class="text-sm font-semibold block">Calorie Intake</label>
-                            <span class="text-xs text-ios-gray">Food & beverages consumed</span>
+                            <label for="inputIntake" class="text-sm font-bold block">Calorie Intake</label>
+                            <span class="text-xs text-slate-400">Logged food balance</span>
                         </div>
                     </div>
-                    <div class="w-28 flex items-center gap-1 bg-ios-bgLight dark:bg-zinc-800 py-1.5 px-2.5 rounded-xl border border-transparent focus-within:border-ios-orange focus-within:ring-2 focus-within:ring-ios-orange/20 transition">
-                        <input type="number" id="inputIntake" placeholder="0" oninput="calculateAll()" class="w-full bg-transparent text-right font-bold text-base outline-none text-ios-orange">
-                        <span class="text-xs font-semibold text-ios-gray">kcal</span>
+                    <div class="w-28 flex items-center gap-1 bg-slate-100 dark:bg-slate-900/90 py-2 px-3 rounded-xl border border-slate-300/50 dark:border-slate-800 focus-within:border-cyber-amber focus-within:ring-2 focus-within:ring-cyber-amber/20 transition">
+                        <input type="number" id="inputIntake" placeholder="0" oninput="calculateAll()" class="w-full bg-transparent text-right font-black font-display text-base outline-none text-cyber-amber">
+                        <span class="text-xs font-bold text-slate-400">kcal</span>
                     </div>
                 </div>
 
-                <!-- Quick add buttons for intake -->
-                <div class="flex gap-1.5 pt-2 border-t border-gray-100 dark:border-zinc-800/60 overflow-x-auto no-scrollbar">
-                    <span class="text-[11px] text-ios-gray self-center mr-1">Quick Add:</span>
-                    <button onclick="addCalories('inputIntake', 100)" class="text-xs bg-ios-bgLight dark:bg-zinc-800 px-2.5 py-1 rounded-lg font-medium hover:bg-ios-orange/20 hover:text-ios-orange transition">+100</button>
-                    <button onclick="addCalories('inputIntake', 250)" class="text-xs bg-ios-bgLight dark:bg-zinc-800 px-2.5 py-1 rounded-lg font-medium hover:bg-ios-orange/20 hover:text-ios-orange transition">+250</button>
-                    <button onclick="addCalories('inputIntake', 500)" class="text-xs bg-ios-bgLight dark:bg-zinc-800 px-2.5 py-1 rounded-lg font-medium hover:bg-ios-orange/20 hover:text-ios-orange transition">+500</button>
-                    <button onclick="clearInput('inputIntake')" class="text-xs text-ios-red bg-ios-red/10 px-2 py-1 rounded-lg font-medium ml-auto">Clear</button>
+                <!-- Custom Add Field for Intake -->
+                <div class="bg-slate-100/90 dark:bg-slate-900/60 p-2.5 rounded-xl flex items-center justify-between gap-2 border border-slate-200/60 dark:border-slate-800">
+                    <div class="flex items-center gap-1.5 text-xs font-semibold text-slate-400">
+                        <i class="fa-solid fa-circle-plus text-cyber-amber"></i>
+                        <span>Add Meal:</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-24 bg-white dark:bg-slate-900 px-2 py-1 rounded-lg flex items-center border border-slate-200 dark:border-slate-700">
+                            <input type="number" id="customAddIntakeInput" placeholder="e.g. 350" onkeydown="handleCustomAddEnter(event)" class="w-full bg-transparent text-right font-bold text-xs outline-none text-slate-900 dark:text-white font-display">
+                            <span class="text-[10px] text-slate-400 ml-1">kcal</span>
+                        </div>
+                        <button onclick="addCustomCaloriesToBalance()" class="bg-gradient-to-r from-cyber-amber to-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:opacity-95 active:scale-95 transition flex items-center gap-1 shadow-neon-amber">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Add
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Presets for Intake -->
+                <div class="flex gap-1.5 pt-1 border-t border-slate-200/60 dark:border-slate-800/60 overflow-x-auto no-scrollbar items-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase mr-1">Presets:</span>
+                    <button onclick="addCalories('inputIntake', 100)" class="text-xs bg-slate-200/80 dark:bg-slate-800/80 hover:bg-cyber-amber/20 hover:text-cyber-amber px-2.5 py-1 rounded-lg font-bold transition">+100</button>
+                    <button onclick="addCalories('inputIntake', 250)" class="text-xs bg-slate-200/80 dark:bg-slate-800/80 hover:bg-cyber-amber/20 hover:text-cyber-amber px-2.5 py-1 rounded-lg font-bold transition">+250</button>
+                    <button onclick="addCalories('inputIntake', 500)" class="text-xs bg-slate-200/80 dark:bg-slate-800/80 hover:bg-cyber-amber/20 hover:text-cyber-amber px-2.5 py-1 rounded-lg font-bold transition">+500</button>
+                    <button onclick="clearInput('inputIntake')" class="text-xs text-cyber-rose bg-cyber-rose/10 px-2 py-1 rounded-lg font-bold ml-auto">Clear</button>
                 </div>
             </div>
 
-            <!-- 3. Active Calories (Exercise & Movement) -->
-            <div class="bg-ios-cardLight dark:bg-ios-cardDark rounded-2xl p-3.5 shadow-sm border border-gray-100 dark:border-zinc-800/80">
-                <div class="flex items-center justify-between mb-2">
+            <!-- 3. Active Calories Card -->
+            <div class="glass-panel-light dark:glass-panel-dark rounded-2xl p-4 shadow-md space-y-3 border border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-red-500/10 text-ios-red flex items-center justify-center">
+                        <div class="w-11 h-11 rounded-2xl bg-cyber-rose/10 border border-cyber-rose/30 text-cyber-rose flex items-center justify-center shadow-neon-rose">
                             <i class="fa-solid fa-person-running text-lg"></i>
                         </div>
                         <div>
-                            <label for="inputActiveBurn" class="text-sm font-semibold block">Active Calories</label>
-                            <span class="text-xs text-ios-gray">Exercise, steps & movement burn</span>
+                            <label for="inputActiveBurn" class="text-sm font-bold block">Active Calories</label>
+                            <span class="text-xs text-slate-400">Exercise & movement</span>
                         </div>
                     </div>
-                    <div class="w-28 flex items-center gap-1 bg-ios-bgLight dark:bg-zinc-800 py-1.5 px-2.5 rounded-xl border border-transparent focus-within:border-ios-red focus-within:ring-2 focus-within:ring-ios-red/20 transition">
-                        <input type="number" id="inputActiveBurn" placeholder="0" oninput="calculateAll()" class="w-full bg-transparent text-right font-bold text-base outline-none text-ios-red">
-                        <span class="text-xs font-semibold text-ios-gray">kcal</span>
+                    <div class="w-28 flex items-center gap-1 bg-slate-100 dark:bg-slate-900/90 py-2 px-3 rounded-xl border border-slate-300/50 dark:border-slate-800 focus-within:border-cyber-rose focus-within:ring-2 focus-within:ring-cyber-rose/20 transition">
+                        <input type="number" id="inputActiveBurn" placeholder="0" oninput="calculateAll()" class="w-full bg-transparent text-right font-black font-display text-base outline-none text-cyber-rose">
+                        <span class="text-xs font-bold text-slate-400">kcal</span>
                     </div>
                 </div>
 
-                <!-- Quick add buttons for Active Calories -->
-                <div class="flex gap-1.5 pt-2 border-t border-gray-100 dark:border-zinc-800/60 overflow-x-auto no-scrollbar">
-                    <span class="text-[11px] text-ios-gray self-center mr-1">Quick Add:</span>
-                    <button onclick="addCalories('inputActiveBurn', 100)" class="text-xs bg-ios-bgLight dark:bg-zinc-800 px-2.5 py-1 rounded-lg font-medium hover:bg-ios-red/20 hover:text-ios-red transition">+100</button>
-                    <button onclick="addCalories('inputActiveBurn', 250)" class="text-xs bg-ios-bgLight dark:bg-zinc-800 px-2.5 py-1 rounded-lg font-medium hover:bg-ios-red/20 hover:text-ios-red transition">+250</button>
-                    <button onclick="addCalories('inputActiveBurn', 400)" class="text-xs bg-ios-bgLight dark:bg-zinc-800 px-2.5 py-1 rounded-lg font-medium hover:bg-ios-red/20 hover:text-ios-red transition">+400</button>
-                    <button onclick="clearInput('inputActiveBurn')" class="text-xs text-ios-red bg-ios-red/10 px-2 py-1 rounded-lg font-medium ml-auto">Clear</button>
+                <!-- Custom Add Field for Active Calories -->
+                <div class="bg-slate-100/90 dark:bg-slate-900/60 p-2.5 rounded-xl flex items-center justify-between gap-2 border border-slate-200/60 dark:border-slate-800">
+                    <div class="flex items-center gap-1.5 text-xs font-semibold text-slate-400">
+                        <i class="fa-solid fa-fire text-cyber-rose"></i>
+                        <span>Add Workout:</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-24 bg-white dark:bg-slate-900 px-2 py-1 rounded-lg flex items-center border border-slate-200 dark:border-slate-700">
+                            <input type="number" id="customAddActiveInput" placeholder="e.g. 250" onkeydown="handleCustomActiveEnter(event)" class="w-full bg-transparent text-right font-bold text-xs outline-none text-slate-900 dark:text-white font-display">
+                            <span class="text-[10px] text-slate-400 ml-1">kcal</span>
+                        </div>
+                        <button onclick="addCustomActiveCaloriesToBalance()" class="bg-gradient-to-r from-cyber-rose to-rose-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:opacity-95 active:scale-95 transition flex items-center gap-1 shadow-neon-rose">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Add
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Presets for Active Burn -->
+                <div class="flex gap-1.5 pt-1 border-t border-slate-200/60 dark:border-slate-800/60 overflow-x-auto no-scrollbar items-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase mr-1">Presets:</span>
+                    <button onclick="addCalories('inputActiveBurn', 100)" class="text-xs bg-slate-200/80 dark:bg-slate-800/80 hover:bg-cyber-rose/20 hover:text-cyber-rose px-2.5 py-1 rounded-lg font-bold transition">+100</button>
+                    <button onclick="addCalories('inputActiveBurn', 250)" class="text-xs bg-slate-200/80 dark:bg-slate-800/80 hover:bg-cyber-rose/20 hover:text-cyber-rose px-2.5 py-1 rounded-lg font-bold transition">+250</button>
+                    <button onclick="addCalories('inputActiveBurn', 400)" class="text-xs bg-slate-200/80 dark:bg-slate-800/80 hover:bg-cyber-rose/20 hover:text-cyber-rose px-2.5 py-1 rounded-lg font-bold transition">+400</button>
+                    <button onclick="clearInput('inputActiveBurn')" class="text-xs text-cyber-rose bg-cyber-rose/10 px-2 py-1 rounded-lg font-bold ml-auto">Clear</button>
+                </div>
+
+                <!-- Active Log Entries -->
+                <div class="pt-2 border-t border-slate-200/60 dark:border-slate-800/60">
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 font-bold mb-1.5">
+                        <span><i class="fa-solid fa-clock-rotate-left mr-1"></i> Activity Log</span>
+                        <button onclick="clearActiveLog()" class="text-[10px] text-cyber-rose hover:underline font-semibold">Clear Log</button>
+                    </div>
+                    <div id="activeLogContainer" class="space-y-1 max-h-24 overflow-y-auto text-xs">
+                        <div class="text-[11px] text-slate-400 italic text-center py-1">No activities logged today.</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Formula & Calculations Breakdown -->
-        <section class="bg-ios-cardLight dark:bg-ios-cardDark rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-zinc-800/80">
+        <section class="glass-panel-light dark:glass-panel-dark rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-800">
             <details class="group">
-                <summary class="flex justify-between items-center font-semibold text-xs text-ios-gray uppercase tracking-wider cursor-pointer list-none">
-                    <span><i class="fa-solid fa-calculator mr-1"></i> Calculation Breakdown</span>
+                <summary class="flex justify-between items-center font-bold text-xs text-slate-400 uppercase tracking-widest cursor-pointer list-none">
+                    <span><i class="fa-solid fa-microchip mr-1.5 text-cyber-cyan"></i> Energy Equation Details</span>
                     <i class="fa-solid fa-chevron-down text-xs group-open:rotate-180 transition-transform"></i>
                 </summary>
-                <div class="mt-3 text-xs space-y-2 pt-2 border-t border-gray-100 dark:border-zinc-800 text-gray-600 dark:text-gray-400">
+                <div class="mt-3 text-xs space-y-2 pt-3 border-t border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-medium">
                     <div class="flex justify-between">
                         <span>Resting BMR:</span>
-                        <span id="breakdownBmr" class="font-mono font-semibold text-ios-blue">0 kcal</span>
+                        <span id="breakdownBmr" class="font-mono font-bold text-cyber-cyan">0 kcal</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>Active Calories Burned:</span>
-                        <span id="breakdownActive" class="font-mono font-semibold text-ios-red">0 kcal</span>
+                        <span>Active Exercise Burned:</span>
+                        <span id="breakdownActive" class="font-mono font-bold text-cyber-rose">0 kcal</span>
                     </div>
-                    <div class="flex justify-between font-medium text-gray-800 dark:text-gray-200">
-                        <span>Total Calories Burned:</span>
-                        <span id="breakdownTotalBurn" class="font-mono font-semibold">0 kcal</span>
+                    <div class="flex justify-between text-slate-800 dark:text-slate-200 font-bold">
+                        <span>Gross Burn Total:</span>
+                        <span id="breakdownTotalBurn" class="font-mono font-bold">0 kcal</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>Chosen Deficit Target:</span>
-                        <span id="breakdownDeficit" class="font-mono font-semibold text-ios-blue">-250 kcal</span>
+                        <span>Selected Deficit Target:</span>
+                        <span id="breakdownDeficit" class="font-mono font-bold text-cyber-cyan">-250 kcal</span>
                     </div>
-                    <div class="flex justify-between pt-1 border-t border-dashed border-gray-200 dark:border-zinc-800">
-                        <span class="font-semibold text-gray-900 dark:text-gray-200">Allowed Calorie Limit:</span>
-                        <span id="breakdownLimit" class="font-mono font-bold text-ios-green">0 kcal</span>
+                    <div class="flex justify-between pt-1.5 border-t border-dashed border-slate-300 dark:border-slate-800">
+                        <span class="font-bold text-slate-900 dark:text-slate-200">Max Intake Limit:</span>
+                        <span id="breakdownLimit" class="font-mono font-extrabold text-cyber-emerald">0 kcal</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Current Food Intake:</span>
-                        <span id="breakdownIntake" class="font-mono font-semibold text-ios-orange">0 kcal</span>
+                        <span id="breakdownIntake" class="font-mono font-bold text-cyber-amber">0 kcal</span>
                     </div>
-                    <div class="flex justify-between pt-1 border-t border-dashed border-gray-200 dark:border-zinc-800">
-                        <span class="font-semibold text-gray-900 dark:text-gray-200">Net Status:</span>
-                        <span id="breakdownNet" class="font-mono font-bold">0 kcal</span>
+                    <div class="flex justify-between pt-1.5 border-t border-dashed border-slate-300 dark:border-slate-800">
+                        <span class="font-bold text-slate-900 dark:text-slate-200">Net Allowance Balance:</span>
+                        <span id="breakdownNet" class="font-mono font-extrabold">0 kcal</span>
                     </div>
                 </div>
             </details>
@@ -314,43 +383,41 @@
     </main>
 
     <script>
-        // Default state
         let state = {
             bmr: 2000,
             intake: 1800,
             activeBurn: 400,
-            deficitTarget: 250, // 250, 500, or custom number
+            deficitTarget: 250,
             customDeficit: 350,
-            darkMode: false
+            darkMode: true,
+            activeLog: []
         };
 
-        // Initialize App on DOM Load
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedState();
             applyTheme();
             updateInputsFromState();
+            renderActiveLog();
             calculateAll();
         });
 
-        // Save State to LocalStorage
         function saveState() {
-            localStorage.setItem('fit_deficit_state', JSON.stringify(state));
+            localStorage.setItem('fit_deficit_state_v2', JSON.stringify(state));
         }
 
-        // Load State from LocalStorage
         function loadSavedState() {
-            const saved = localStorage.getItem('fit_deficit_state');
+            const saved = localStorage.getItem('fit_deficit_state_v2');
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
                     state = { ...state, ...parsed };
+                    if (!Array.isArray(state.activeLog)) state.activeLog = [];
                 } catch(e) {
-                    console.error('Failed to load state', e);
+                    console.error('Failed to load saved state', e);
                 }
             }
         }
 
-        // Theme Toggle Functionality
         function toggleTheme() {
             state.darkMode = !state.darkMode;
             applyTheme();
@@ -362,24 +429,21 @@
             const icon = document.getElementById('themeIcon');
             if (state.darkMode) {
                 html.classList.add('dark');
-                icon.className = 'fa-solid fa-sun text-ios-orange';
+                icon.className = 'fa-solid fa-sun text-cyber-amber';
             } else {
                 html.classList.remove('dark');
-                icon.className = 'fa-solid fa-moon';
+                icon.className = 'fa-solid fa-moon text-slate-600';
             }
         }
 
-        // Populate Input fields from state
         function updateInputsFromState() {
             document.getElementById('inputBmr').value = state.bmr || '';
             document.getElementById('inputIntake').value = state.intake || '';
             document.getElementById('inputActiveBurn').value = state.activeBurn || '';
             document.getElementById('customDeficitInput').value = state.customDeficit || 350;
-            
             updateDeficitUI();
         }
 
-        // Change Deficit Target (250, 500, or Custom)
         function setDeficitTarget(target) {
             state.deficitTarget = target;
             updateDeficitUI();
@@ -396,19 +460,18 @@
             saveState();
         }
 
-        // Update UI for active Deficit selection button
         function updateDeficitUI() {
             const btn250 = document.getElementById('btnDeficit250');
             const btn500 = document.getElementById('btnDeficit500');
             const btnCustom = document.getElementById('btnDeficitCustom');
             const customContainer = document.getElementById('customDeficitContainer');
 
-            const activeClass = "bg-white dark:bg-zinc-700 text-ios-blue shadow-sm";
-            const inactiveClass = "text-ios-gray hover:text-gray-800 dark:hover:text-gray-200";
+            const activeClass = "bg-gradient-to-r from-cyber-cyan to-cyber-emerald text-slate-950 font-black shadow-neon-cyan";
+            const inactiveClass = "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200";
 
-            btn250.className = `flex-1 py-2.5 text-xs font-semibold rounded-xl text-center z-10 transition-all duration-200 flex items-center justify-center gap-1.5 ${state.deficitTarget === 250 ? activeClass : inactiveClass}`;
-            btn500.className = `flex-1 py-2.5 text-xs font-semibold rounded-xl text-center z-10 transition-all duration-200 flex items-center justify-center gap-1.5 ${state.deficitTarget === 500 ? activeClass : inactiveClass}`;
-            btnCustom.className = `flex-1 py-2.5 text-xs font-semibold rounded-xl text-center z-10 transition-all duration-200 flex items-center justify-center gap-1.5 ${state.deficitTarget === 'custom' ? activeClass : inactiveClass}`;
+            btn250.className = `flex-1 py-2.5 text-xs font-bold rounded-xl text-center z-10 transition-all duration-300 flex flex-col items-center justify-center ${state.deficitTarget === 250 ? activeClass : inactiveClass}`;
+            btn500.className = `flex-1 py-2.5 text-xs font-bold rounded-xl text-center z-10 transition-all duration-300 flex flex-col items-center justify-center ${state.deficitTarget === 500 ? activeClass : inactiveClass}`;
+            btnCustom.className = `flex-1 py-2.5 text-xs font-bold rounded-xl text-center z-10 transition-all duration-300 flex flex-col items-center justify-center ${state.deficitTarget === 'custom' ? activeClass : inactiveClass}`;
 
             if (state.deficitTarget === 'custom') {
                 customContainer.classList.remove('hidden');
@@ -417,77 +480,159 @@
             }
         }
 
-        // Helper function to quick-add calories
+        function addCustomCaloriesToBalance() {
+            const customInput = document.getElementById('customAddIntakeInput');
+            const addAmount = parseFloat(customInput.value);
+
+            if (!isNaN(addAmount) && addAmount > 0) {
+                const intakeInput = document.getElementById('inputIntake');
+                let currentIntake = parseFloat(intakeInput.value) || 0;
+                intakeInput.value = currentIntake + addAmount;
+                customInput.value = '';
+                calculateAll();
+            }
+        }
+
+        function handleCustomAddEnter(event) {
+            if (event.key === 'Enter') addCustomCaloriesToBalance();
+        }
+
+        function addCustomActiveCaloriesToBalance() {
+            const customInput = document.getElementById('customAddActiveInput');
+            const addAmount = parseFloat(customInput.value);
+
+            if (!isNaN(addAmount) && addAmount > 0) {
+                const activeInput = document.getElementById('inputActiveBurn');
+                let currentActive = parseFloat(activeInput.value) || 0;
+                activeInput.value = currentActive + addAmount;
+                
+                const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                state.activeLog.unshift({ time: timeStr, amount: addAmount });
+                if (state.activeLog.length > 10) state.activeLog.pop();
+
+                customInput.value = '';
+                renderActiveLog();
+                calculateAll();
+            }
+        }
+
+        function handleCustomActiveEnter(event) {
+            if (event.key === 'Enter') addCustomActiveCaloriesToBalance();
+        }
+
+        function renderActiveLog() {
+            const container = document.getElementById('activeLogContainer');
+            if (!state.activeLog || state.activeLog.length === 0) {
+                container.innerHTML = `<div class="text-[11px] text-slate-400 italic text-center py-1">No activities logged today.</div>`;
+                return;
+            }
+
+            container.innerHTML = state.activeLog.map((log, index) => `
+                <div class="flex items-center justify-between bg-slate-100/80 dark:bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-200/50 dark:border-slate-800">
+                    <span class="text-slate-400 font-medium text-[11px]"><i class="fa-solid fa-fire text-cyber-rose mr-1"></i> Workout @ ${log.time}</span>
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-cyber-rose">+${log.amount} kcal</span>
+                        <button onclick="deleteActiveLogEntry(${index})" class="text-slate-400 hover:text-cyber-rose text-[10px]"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteActiveLogEntry(index) {
+            if (state.activeLog && state.activeLog[index]) {
+                const removed = state.activeLog.splice(index, 1)[0];
+                const activeInput = document.getElementById('inputActiveBurn');
+                let currentActive = parseFloat(activeInput.value) || 0;
+                activeInput.value = Math.max(0, currentActive - removed.amount);
+                renderActiveLog();
+                calculateAll();
+            }
+        }
+
+        function clearActiveLog() {
+            state.activeLog = [];
+            renderActiveLog();
+            saveState();
+        }
+
         function addCalories(inputId, amount) {
             const input = document.getElementById(inputId);
             let currentVal = parseFloat(input.value) || 0;
             currentVal += amount;
             input.value = currentVal;
+
+            if (inputId === 'inputActiveBurn') {
+                const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                state.activeLog.unshift({ time: timeStr, amount: amount });
+                renderActiveLog();
+            }
+
             calculateAll();
         }
 
-        // Clear specific input
         function clearInput(inputId) {
             document.getElementById(inputId).value = '';
+            if (inputId === 'inputActiveBurn') clearActiveLog();
             calculateAll();
         }
 
-        // Reset all daily values
         function resetDailyData() {
             document.getElementById('inputIntake').value = '';
             document.getElementById('inputActiveBurn').value = '';
+            document.getElementById('customAddIntakeInput').value = '';
+            document.getElementById('customAddActiveInput').value = '';
+            clearActiveLog();
             calculateAll();
         }
 
-        // Main Calculation Engine
         function calculateAll() {
-            // Read input values
             const bmr = parseFloat(document.getElementById('inputBmr').value) || 0;
             const intake = parseFloat(document.getElementById('inputIntake').value) || 0;
             const activeBurn = parseFloat(document.getElementById('inputActiveBurn').value) || 0;
 
-            // Get target deficit value
             let activeDeficitVal = 250;
             if (state.deficitTarget === 500) activeDeficitVal = 500;
             else if (state.deficitTarget === 'custom') activeDeficitVal = parseFloat(document.getElementById('customDeficitInput').value) || 0;
 
-            // Update local state
             state.bmr = bmr;
             state.intake = intake;
             state.activeBurn = activeBurn;
             saveState();
 
-            // Total Burned = BMR (Resting) + Active Calories
             const totalBurned = bmr + activeBurn;
             const targetCalorieGoal = Math.max(0, totalBurned - activeDeficitVal);
             const remainingAllowance = targetCalorieGoal - intake;
 
-            // Render Dashboard Metrics
             document.getElementById('targetCalorieGoal').textContent = targetCalorieGoal.toLocaleString();
             document.getElementById('sumIntake').textContent = intake.toLocaleString();
             document.getElementById('sumTotalBurn').textContent = totalBurned.toLocaleString();
             document.getElementById('sumDeficit').textContent = `-${activeDeficitVal}`;
 
-            // Render Remaining Calories & Status Badge
             const remainingSubtext = document.getElementById('remainingSubtext');
             const statusTag = document.getElementById('statusTag');
+            const heroGaugeCard = document.getElementById('heroGaugeCard');
 
             if (remainingAllowance >= 0) {
-                remainingSubtext.className = "text-xs font-semibold text-ios-green flex items-center justify-center gap-1";
+                remainingSubtext.className = "text-xs font-bold text-cyber-emerald flex items-center justify-center gap-1 mt-1";
                 remainingSubtext.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span id="netRemainingVal">${remainingAllowance.toLocaleString()}</span> kcal remaining today`;
 
-                statusTag.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-ios-green/10 text-ios-green flex items-center gap-1";
-                statusTag.innerHTML = `<i class="fa-solid fa-circle-check text-[10px]"></i> On Track`;
+                statusTag.className = "text-xs font-bold px-3 py-1 rounded-full bg-cyber-emerald/10 text-cyber-emerald border border-cyber-emerald/30 flex items-center gap-1.5 shadow-neon-emerald";
+                statusTag.innerHTML = `<i class="fa-solid fa-shield-halved text-[10px]"></i> On Track`;
+
+                heroGaugeCard.classList.remove('glow-effect-red');
+                heroGaugeCard.classList.add('glow-effect-green');
             } else {
                 const surplus = Math.abs(remainingAllowance);
-                remainingSubtext.className = "text-xs font-semibold text-ios-red flex items-center justify-center gap-1";
+                remainingSubtext.className = "text-xs font-bold text-cyber-rose flex items-center justify-center gap-1 mt-1";
                 remainingSubtext.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span id="netRemainingVal">${surplus.toLocaleString()}</span> kcal OVER target`;
 
-                statusTag.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-ios-red/10 text-ios-red flex items-center gap-1";
-                statusTag.innerHTML = `<i class="fa-solid fa-circle-exclamation text-[10px]"></i> Over Target`;
+                statusTag.className = "text-xs font-bold px-3 py-1 rounded-full bg-cyber-rose/10 text-cyber-rose border border-cyber-rose/30 flex items-center gap-1.5 shadow-neon-rose";
+                statusTag.innerHTML = `<i class="fa-solid fa-circle-exclamation text-[10px]"></i> Target Exceeded`;
+
+                heroGaugeCard.classList.remove('glow-effect-green');
+                heroGaugeCard.classList.add('glow-effect-red');
             }
 
-            // Update Progress Bar
             document.getElementById('intakeBarLabel').textContent = intake.toLocaleString();
             document.getElementById('maxBarLabel').textContent = targetCalorieGoal.toLocaleString();
 
@@ -495,14 +640,13 @@
             let percentage = targetCalorieGoal > 0 ? (intake / targetCalorieGoal) * 100 : 0;
             
             if (percentage > 100) {
-                progressBar.className = "h-full bg-ios-red rounded-full transition-all duration-300";
+                progressBar.className = "h-full bg-gradient-to-r from-cyber-rose to-rose-600 rounded-xl transition-all duration-500 shadow-neon-rose";
                 progressBar.style.width = "100%";
             } else {
-                progressBar.className = "h-full bg-gradient-to-r from-ios-blue via-ios-green to-ios-orange rounded-full transition-all duration-300";
+                progressBar.className = "h-full bg-gradient-to-r from-cyber-cyan via-cyber-emerald to-cyber-amber rounded-xl transition-all duration-500 shadow-neon-emerald";
                 progressBar.style.width = `${Math.min(percentage, 100)}%`;
             }
 
-            // Update Breakdown Section
             document.getElementById('breakdownBmr').textContent = `${bmr.toLocaleString()} kcal`;
             document.getElementById('breakdownActive').textContent = `${activeBurn.toLocaleString()} kcal`;
             document.getElementById('breakdownTotalBurn').textContent = `${totalBurned.toLocaleString()} kcal`;
@@ -510,10 +654,10 @@
             document.getElementById('breakdownLimit').textContent = `${targetCalorieGoal.toLocaleString()} kcal`;
             document.getElementById('breakdownIntake').textContent = `${intake.toLocaleString()} kcal`;
             
-            const netVal = remainingAllowance >= 0 ? `+${remainingAllowance.toLocaleString()} kcal remaining` : `-${Math.abs(remainingAllowance).toLocaleString()} kcal over`;
+            const netVal = remainingAllowance >= 0 ? `+${remainingAllowance.toLocaleString()} kcal remaining` : `-${Math.abs(remainingAllowance).toLocaleString()} kcal over limit`;
             const netElement = document.getElementById('breakdownNet');
             netElement.textContent = netVal;
-            netElement.className = remainingAllowance >= 0 ? "font-mono font-bold text-ios-green" : "font-mono font-bold text-ios-red";
+            netElement.className = remainingAllowance >= 0 ? "font-mono font-bold text-cyber-emerald" : "font-mono font-bold text-cyber-rose";
         }
     </script>
 </body>

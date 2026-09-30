@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Calorie & Deficit Tracker</title>
+    <title>NexusFit - Calorie Deficit Tracker</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,8 +102,13 @@
     <header class="sticky top-0 z-50 glass-panel-light dark:glass-panel-dark border-b border-slate-200 dark:border-slate-800 px-4 pt-4 pb-3 shadow-md">
         <div class="max-w-md mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyber-emerald via-cyber-cyan to-cyber-purple flex items-center justify-center text-white shadow-neon-emerald">
-                    <i class="fa-solid fa-bolt-lightning text-lg"></i>
+                <div class="w-10 h-10 rounded-2xl bg-slate-900 border border-cyber-cyan/30 flex items-center justify-center text-white shadow-neon-cyan p-1.5">
+                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="#06B6D4" stroke-width="4" stroke-dasharray="200" stroke-dashoffset="40"/>
+                        <path d="M 30 65 L 45 40 L 55 50 L 70 30" fill="none" stroke="#10B981" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 65 30 L 70 30 L 70 35" fill="none" stroke="#10B981" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M 35 35 Q 50 20 65 35 Q 50 70 35 35 Z" fill="none" stroke="#F43F5E" stroke-width="4"/>
+                    </svg>
                 </div>
                 <div>
                     <h1 class="text-xl font-extrabold font-display tracking-tight leading-none bg-gradient-to-r from-cyber-cyan via-cyber-emerald to-cyber-purple bg-clip-text text-transparent">
@@ -136,7 +142,6 @@
                 </span>
             </div>
             
-            <!-- Futuristic Segmented Controls -->
             <div class="bg-slate-200/70 dark:bg-slate-900/80 p-1 rounded-2xl flex relative border border-slate-300/50 dark:border-slate-800">
                 <button id="btnDeficit250" onclick="setDeficitTarget(250)" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-center z-10 transition-all duration-300 flex flex-col items-center justify-center">
                     <span>250 kcal</span>
@@ -152,7 +157,6 @@
                 </button>
             </div>
 
-            <!-- Custom Deficit Input Box -->
             <div id="customDeficitContainer" class="hidden mt-3 pt-3 border-t border-slate-200 dark:border-slate-800">
                 <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-900/60 px-3.5 py-2 rounded-xl border border-cyber-cyan/30">
                     <label for="customDeficitInput" class="text-xs font-medium text-slate-500 dark:text-slate-400">Custom Target (kcal):</label>
@@ -162,7 +166,6 @@
         </section>
 
         <section id="heroGaugeCard" class="glass-panel-light dark:glass-panel-dark rounded-3xl p-5 shadow-2xl relative overflow-hidden transition-all duration-300">
-            <!-- Decorative Glow Element -->
             <div class="absolute -right-10 -top-10 w-36 h-36 bg-cyber-emerald/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -left-10 -bottom-10 w-36 h-36 bg-cyber-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -176,7 +179,6 @@
                 </span>
             </div>
 
-            <!-- Main Metric Display -->
             <div class="my-5 text-center">
                 <div class="text-[11px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-bold">Max Intake Allowance</div>
                 <div class="flex items-baseline justify-center gap-1.5 my-1">
@@ -188,7 +190,6 @@
                 </div>
             </div>
 
-            <!-- Glowing Cyber Bar -->
             <div class="space-y-1.5 mb-5">
                 <div class="flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
                     <span>Intake: <strong id="intakeBarLabel" class="text-slate-900 dark:text-white font-display">0</strong></span>
@@ -199,7 +200,6 @@
                 </div>
             </div>
 
-            <!-- Summary Grid Cards -->
             <div class="grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-200 dark:border-slate-800">
                 <div class="bg-slate-100/80 dark:bg-slate-900/50 p-2.5 rounded-2xl border border-slate-200/60 dark:border-slate-800 text-center">
                     <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Intake</div>
@@ -222,7 +222,7 @@
         <section class="space-y-3.5">
             <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Calorie Matrix Inputs</h3>
 
-            <!-- 1. Resting Calories / BMR Card -->
+            <!-- 1. BMR Card -->
             <div class="glass-panel-light dark:glass-panel-dark rounded-2xl p-4 shadow-md flex items-center justify-between border border-slate-200 dark:border-slate-800">
                 <div class="flex items-center gap-3">
                     <div class="w-11 h-11 rounded-2xl bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan flex items-center justify-center shadow-neon-cyan">
@@ -239,7 +239,7 @@
                 </div>
             </div>
 
-            <!-- 2. Calorie Intake Box -->
+            <!-- 2. Calorie Intake Box + Mini Calculator -->
             <div class="glass-panel-light dark:glass-panel-dark rounded-2xl p-4 shadow-md space-y-3 border border-slate-200 dark:border-slate-800">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
@@ -257,11 +257,36 @@
                     </div>
                 </div>
 
+                <div class="flex items-center justify-between pt-1">
+                    <button onclick="toggleCalcModal()" class="text-xs font-bold text-cyber-amber bg-cyber-amber/10 border border-cyber-amber/30 px-3 py-1.5 rounded-xl hover:bg-cyber-amber/20 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-calculator"></i> Quick Food Calculator
+                    </button>
+                    <button onclick="clearInput('inputIntake')" class="text-xs text-cyber-rose bg-cyber-rose/10 px-2.5 py-1.5 rounded-xl font-bold">Clear Balance</button>
+                </div>
+
+                <!-- Embedded Mini Calculator Drawer -->
+                <div id="calcDrawer" class="hidden bg-slate-900/90 p-3 rounded-2xl border border-cyber-amber/30 space-y-2 mt-2">
+                    <div class="flex justify-between items-center text-xs text-slate-400 font-bold">
+                        <span>Meal Math Calculator</span>
+                        <span id="calcDisplayVal" class="text-cyber-amber font-mono text-sm">0</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="calcInput" placeholder="e.g. 180 + 220 + 75" onkeyup="updateCalcLive()" class="w-full bg-slate-950 px-3 py-2 rounded-xl text-xs font-mono text-slate-100 outline-none border border-slate-800 focus:border-cyber-amber">
+                    </div>
+                    <div class="flex gap-1.5 pt-1">
+                        <button onclick="appendCalc('+')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-1.5 rounded-lg text-xs font-bold">+</button>
+                        <button onclick="appendCalc('-')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-1.5 rounded-lg text-xs font-bold">-</button>
+                        <button onclick="appendCalc('*')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-1.5 rounded-lg text-xs font-bold">&times;</button>
+                        <button onclick="clearCalc()" class="flex-1 bg-cyber-rose/20 text-cyber-rose py-1.5 rounded-lg text-xs font-bold">C</button>
+                        <button onclick="applyCalcToSum()" class="flex-[2] bg-gradient-to-r from-cyber-amber to-amber-600 text-white py-1.5 rounded-lg text-xs font-bold shadow-neon-amber">+ Add Sum</button>
+                    </div>
+                </div>
+
                 <!-- Custom Add Field for Intake -->
                 <div class="bg-slate-100/90 dark:bg-slate-900/60 p-2.5 rounded-xl flex items-center justify-between gap-2 border border-slate-200/60 dark:border-slate-800">
                     <div class="flex items-center gap-1.5 text-xs font-semibold text-slate-400">
                         <i class="fa-solid fa-circle-plus text-cyber-amber"></i>
-                        <span>Add Meal:</span>
+                        <span>Add Item:</span>
                     </div>
                     <div class="flex items-center gap-1.5">
                         <div class="w-24 bg-white dark:bg-slate-900 px-2 py-1 rounded-lg flex items-center border border-slate-200 dark:border-slate-700">
@@ -280,7 +305,6 @@
                     <button onclick="addCalories('inputIntake', 100)" class="text-xs bg-slate-200/80 dark:bg-slate-800/80 hover:bg-cyber-amber/20 hover:text-cyber-amber px-2.5 py-1 rounded-lg font-bold transition">+100</button>
                     <button onclick="addCalories('inputIntake', 250)" class="text-xs bg-slate-200/80 dark:bg-slate-800/80 hover:bg-cyber-amber/20 hover:text-cyber-amber px-2.5 py-1 rounded-lg font-bold transition">+250</button>
                     <button onclick="addCalories('inputIntake', 500)" class="text-xs bg-slate-200/80 dark:bg-slate-800/80 hover:bg-cyber-amber/20 hover:text-cyber-amber px-2.5 py-1 rounded-lg font-bold transition">+500</button>
-                    <button onclick="clearInput('inputIntake')" class="text-xs text-cyber-rose bg-cyber-rose/10 px-2 py-1 rounded-lg font-bold ml-auto">Clear</button>
                 </div>
             </div>
 
@@ -402,11 +426,11 @@
         });
 
         function saveState() {
-            localStorage.setItem('fit_deficit_state_v2', JSON.stringify(state));
+            localStorage.setItem('fit_deficit_state_v3', JSON.stringify(state));
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('fit_deficit_state_v2');
+            const saved = localStorage.getItem('fit_deficit_state_v3');
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
@@ -477,6 +501,45 @@
                 customContainer.classList.remove('hidden');
             } else {
                 customContainer.classList.add('hidden');
+            }
+        }
+
+        function toggleCalcModal() {
+            const drawer = document.getElementById('calcDrawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function appendCalc(op) {
+            const input = document.getElementById('calcInput');
+            input.value += ` ${op} `;
+            updateCalcLive();
+        }
+
+        function clearCalc() {
+            document.getElementById('calcInput').value = '';
+            document.getElementById('calcDisplayVal').textContent = '0';
+        }
+
+        function updateCalcLive() {
+            const expr = document.getElementById('calcInput').value;
+            const display = document.getElementById('calcDisplayVal');
+            try {
+                if (!expr.trim()) { display.textContent = '0'; return; }
+                const sanitized = expr.replace(/[^0-9+\-*/.]/g, '');
+                const result = Function(`'use strict'; return (${sanitized})`)();
+                display.textContent = isNaN(result) ? 'Err' : Math.round(result);
+            } catch(e) {
+                display.textContent = '...';
+            }
+        }
+
+        function applyCalcToSum() {
+            const display = document.getElementById('calcDisplayVal');
+            const val = parseFloat(display.textContent);
+            if (!isNaN(val) && val > 0) {
+                addCalories('inputIntake', val);
+                clearCalc();
+                toggleCalcModal();
             }
         }
 
